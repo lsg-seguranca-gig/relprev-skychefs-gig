@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RELPREV · LSG Sky Chefs · Base GIG</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --asphalt: #12161b;
+    --asphalt-2: #1b2129;
+    --asphalt-3: #232b35;
+    --steel: #3a4552;
+    --steel-2: #5a6776;
+    --yellow: #f5b700;
+    --amber: #e2711d;
+    --green: #3fa34d;
+    --red: #d64545;
+    --off-white: #eceff3;
+    --muted: #9aa5b1;
+    --radius: 10px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:var(--asphalt);color:var(--off-white);font-family:'Inter',sans-serif;}
+  body{min-height:100vh;-webkit-font-smoothing:antialiased;}
+  h1,h2,h3,.brand{font-family:'Space Grotesk',sans-serif;}
+
+  .hazard{
+    height:8px;width:100%;
+    background:repeating-linear-gradient(135deg, var(--yellow) 0 14px, var(--asphalt) 14px 28px);
+  }
+
+  header.top{
+    background:var(--asphalt-2);
+    border-bottom:1px solid var(--steel);
+    padding:22px 24px 20px;
+  }
+  .wrap{max-width:640px;margin:0 auto;}
+  .brandrow{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+  .brand{font-size:20px;font-weight:700;letter-spacing:0.2px;}
+  .brand span{color:var(--yellow);}
+  .baseline{color:var(--muted);font-size:13px;margin-top:4px;}
+  nav.tabs{display:flex;gap:6px;margin-top:18px;}
+  nav.tabs button{
+    flex:1;background:transparent;border:1px solid var(--steel);color:var(--muted);
+    padding:9px 10px;border-radius:8px;font-family:'Inter';font-size:13px;font-weight:600;cursor:pointer;
+  }
+  nav.tabs button.active{background:var(--yellow);color:#14181d;border-color:var(--yellow);}
+
+  main{padding:28px 20px 60px;}
+
+  .card{
+    background:var(--asphalt-2);border:1px solid var(--steel);border-radius:var(--radius);
+    padding:22px 22px 24px;margin-bottom:16px;
+  }
+  .card h2{font-size:16px;margin:0 0 4px;font-weight:600;}
+  .card .hint{color:var(--muted);font-size:13px;margin:0 0 16px;line-height:1.5;}
+
+  fieldset{border:none;padding:0;margin:0 0 18px;}
+  legend{font-size:13px;font-weight:600;color:var(--off-white);margin-bottom:10px;padding:0;}
+
+  .choice-row{display:flex;gap:10px;}
+  .choice{
+    flex:1;border:1px solid var(--steel);border-radius:8px;padding:14px 12px;cursor:pointer;
+    text-align:left;background:var(--asphalt-3);
+  }
+  .choice.selected{border-color:var(--yellow);background:rgba(245,183,0,0.08);}
+  .choice strong{display:block;font-size:14px;margin-bottom:2px;}
+  .choice span{font-size:12px;color:var(--muted);}
+
+  label{display:block;font-size:13px;font-weight:600;margin:14px 0 6px;}
+  label.req::after{content:" *";color:var(--amber);}
+  input[type=text], input[type=email], input[type=tel], input[type=datetime-local], select, textarea{
+    width:100%;background:var(--asphalt);border:1px solid var(--steel);border-radius:8px;
+    color:var(--off-white);padding:11px 12px;font-family:'Inter';font-size:14px;
+  }
+  input:focus, select:focus, textarea:focus{outline:2px solid var(--yellow);outline-offset:1px;border-color:var(--yellow);}
+  textarea{min-height:110px;resize:vertical;}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  @media (max-width:480px){.grid2{grid-template-columns:1fr;} .choice-row{flex-direction:column;}}
+
+  .idfields{border-left:2px solid var(--yellow);padding-left:14px;margin-top:14px;}
+
+  button.primary{
+    width:100%;background:var(--yellow);color:#14181d;border:none;border-radius:8px;
+    padding:14px;font-family:'Space Grotesk';font-weight:700;font-size:15px;cursor:pointer;margin-top:8px;
+  }
+  button.primary:hover{background:#ffc933;}
+  button.ghost{
+    width:100%;background:transparent;border:1px solid var(--steel);color:var(--off-white);
+    border-radius:8px;padding:12px;font-size:14px;cursor:pointer;margin-top:10px;
+  }
+  .error{color:var(--red);font-size:13px;margin-top:6px;display:none;}
+  .error.show{display:block;}
+
+  .protocol-box{
+    border:1px dashed var(--yellow);border-radius:10px;padding:18px;text-align:center;margin:16px 0;
+  }
+  .protocol-box .num{font-family:'Space Grotesk';font-size:22px;font-weight:700;color:var(--yellow);letter-spacing:1px;}
+  .protocol-box .label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;}
+  .copybtn{background:var(--asphalt-3);border:1px solid var(--steel);color:var(--off-white);border-radius:6px;padding:6px 12px;font-size:12px;cursor:pointer;margin-top:10px;}
+
+  .status-pill{display:inline-block;font-size:12px;font-weight:700;padding:4px 10px;border-radius:999px;}
+  .status-Recebido{background:rgba(90,103,118,.3);color:#c4ccd6;}
+  .status-Em-analise{background:rgba(245,183,0,.15);color:var(--yellow);}
+  .status-Em-tratativa{background:rgba(226,113,29,.15);color:var(--amber);}
+  .status-Concluido{background:rgba(63,163,77,.15);color:var(--green);}
+
+  .timeline{margin-top:16px;border-top:1px solid var(--steel);padding-top:14px;}
+  .tl-item{display:flex;gap:10px;margin-bottom:12px;}
+  .tl-dot{width:8px;height:8px;border-radius:50%;background:var(--yellow);margin-top:5px;flex-shrink:0;}
+  .tl-body .tl-when{font-size:11px;color:var(--muted);}
+  .tl-body .tl-text{font-size:13px;margin-top:2px;}
+
+  .banner{
+    background:rgba(226,113,29,0.12);border:1px solid var(--amber);color:#f4c99a;
+    border-radius:8px;padding:10px 14px;font-size:12.5px;margin-bottom:18px;line-height:1.5;
+  }
+  .toast{
+    position:fixed;bottom:20px;left:50%;transform:translateX(-50%);
+    background:var(--asphalt-3);border:1px solid var(--yellow);color:var(--off-white);
+    padding:12px 18px;border-radius:8px;font-size:13px;max-width:90%;text-align:center;
+    box-shadow:0 6px 24px rgba(0,0,0,.4);z-index:50;
+  }
+  table{width:100%;border-collapse:collapse;font-size:12.5px;}
+  th,td{text-align:left;padding:8px 6px;border-bottom:1px solid var(--steel);vertical-align:top;}
+  th{color:var(--muted);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.4px;}
+  .rowbtn{background:var(--asphalt-3);border:1px solid var(--steel);color:var(--off-white);border-radius:6px;padding:5px 10px;font-size:12px;cursor:pointer;}
+  .adminlogin{max-width:280px;margin:60px auto;text-align:center;}
+  footer{color:var(--muted);font-size:11.5px;text-align:center;padding:20px;}
+</style>
+</head>
+<body>
+
+<div class="hazard"></div>
+<header class="top">
+  <div class="wrap">
+    <div class="brandrow">
+      <div>
+        <div class="brand">LSG <span>Sky Chefs</span></div>
+        <div class="baseline">RELPREV · Relato de Prevenção de Acidentes — Base GIG · Transportes / Pista</div>
+      </div>
+    </div>
+    <nav class="tabs">
+      <button data-view="form" class="active">Novo relato</button>
+      <button data-view="track">Consultar relato</button>
+      <button data-view="adminlogin">Equipe de Segurança</button>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ================= FORM VIEW ================= -->
+  <section id="view-form">
+    <div class="card">
+      <h2>Relatar uma condição, ato inseguro ou quase acidente</h2>
+      <p class="hint">Use este canal para relatar tudo que possa colocar em risco você, seus colegas ou a operação no pátio — cargas, equipamentos, procedimentos, aeronaves ou instalações. Leva menos de 3 minutos.</p>
+
+      <fieldset>
+        <legend>Como você quer relatar?</legend>
+        <div class="choice-row">
+          <div class="choice selected" data-id="anon">
+            <strong>Anônimo</strong>
+            <span>Nenhum dado seu é solicitado ou salvo.</span>
+          </div>
+          <div class="choice" data-id="ident">
+            <strong>Identificado</strong>
+            <span>Você recebe um protocolo e acompanha o andamento.</span>
+          </div>
+        </div>
+      </fieldset>
+
+      <div id="idfields" class="idfields" style="display:none">
+        <label class="req">Nome completo</label>
+        <input type="text" id="f-nome" placeholder="Seu nome">
+        <div class="grid2">
+          <div>
+            <label class="req">E-mail</label>
+            <input type="email" id="f-email" placeholder="seuemail@exemplo.com">
+          </div>
+          <div>
+            <label class="req">Telefone (WhatsApp)</label>
+            <input type="tel" id="f-tel" placeholder="(21) 90000-0000">
+          </div>
+        </div>
+      </div>
+
+      <fieldset style="margin-top:20px">
+        <legend>O que aconteceu?</legend>
+        <label class="req">Tipo de relato</label>
+        <select id="f-tipo">
+          <option value="">Selecione…</option>
+          <option>Condição insegura</option>
+          <option>Ato inseguro</option>
+          <option>Quase acidente</option>
+          <option>Acidente / incidente</option>
+          <option>Sugestão de melhoria</option>
+        </select>
+
+        <div class="grid2">
+          <div>
+            <label class="req">Local</label>
+            <select id="f-local">
+              <option value="">Selecione…</option>
+              <option>Pátio / posição de aeronave</option>
+              <option>Área de carregamento (dock)</option>
+              <option>Elevador de carga (High Loader)</option>
+              <option>Trator/carreta de carga</option>
+              <option>Galeria / esteira</option>
+              <option>Estacionamento de veículos de rampa</option>
+              <option>Outro</option>
+            </select>
+          </div>
+          <div>
+            <label>Data/hora do ocorrido</label>
+            <input type="datetime-local" id="f-data">
+          </div>
+        </div>
+
+        <label class="req">Descrição detalhada</label>
+        <textarea id="f-desc" placeholder="Descreva o que você viu ou vivenciou: o que aconteceu, onde, com qual equipamento/carga, e o que poderia ter sido evitado."></textarea>
+        <p class="error" id="f-error">Preencha os campos obrigatórios antes de enviar.</p>
+      </fieldset>
+
+      <button class="primary" onclick="submitReport()">Enviar relato</button>
+    </div>
+  </section>
+
+  <!-- ================= CONFIRM VIEW ================= -->
+  <section id="view-confirm" style="display:none">
+    <div class="card" style="text-align:center">
+      <h2 id="confirm-title">Relato enviado</h2>
+      <p class="hint" id="confirm-text"></p>
+      <div id="confirm-protocol"></div>
+      <button class="ghost" onclick="goto('form')">Enviar outro relato</button>
+    </div>
+  </section>
+
+  <!-- ================= TRACK VIEW ================= -->
+  <section id="view-track" style="display:none">
+    <div class="card">
+      <h2>Consultar o andamento do seu relato</h2>
+      <p class="hint">Disponível apenas para relatos identificados. Informe o protocolo recebido no envio.</p>
+      <label class="req">Protocolo</label>
+      <input type="text" id="track-input" placeholder="Ex: RELPREV-GIG-20260908-4821">
+      <button class="primary" onclick="trackReport()">Consultar</button>
+      <p class="error" id="track-error">Protocolo não encontrado. Verifique e tente novamente.</p>
+    </div>
+    <div id="track-result"></div>
+  </section>
+
+  <!-- ================= ADMIN LOGIN ================= -->
+  <section id="view-adminlogin" style="display:none">
+    <div class="card adminlogin">
+      <h2>Acesso da equipe de Segurança</h2>
+      <p class="hint">Área restrita para gestão dos relatos e atualização de status.</p>
+      <input type="text" id="admin-pass" placeholder="Código de acesso">
+      <button class="primary" onclick="adminLogin()">Entrar</button>
+      <p class="error" id="admin-error">Código incorreto.</p>
+      <p class="hint" style="margin-top:14px">Demonstração: código <strong>seguranca</strong></p>
+    </div>
+  </section>
+
+  <!-- ================= ADMIN DASHBOARD ================= -->
+  <section id="view-admin" style="display:none">
+    <div class="banner">Painel de demonstração. Em produção, esta tela roda como um app privado (Google Apps Script / planilha) restrito à equipe de Segurança, com login corporativo.</div>
+    <div class="card">
+      <h2>Relatos recebidos</h2>
+      <div id="admin-list"></div>
+    </div>
+  </section>
+
+</main>
+
+<footer>LSG Sky Chefs · Base GIG · Segurança operacional em pista</footer>
+<div id="toast" style="display:none" class="toast"></div>
+
+<script>
+const API = '/api/gas'; // proxy Vercel -> Google Apps Script (ver api/gas.js)
+let currentIdType = 'anon';
+let adminReportsCache = []; // guarda a última lista carregada pelo painel de Segurança
+
+// ---------- helpers ----------
+function $(id){ return document.getElementById(id); }
+function showToast(msg, ms=3200){
+  const t = $('toast'); t.textContent = msg; t.style.display='block';
+  clearTimeout(showToast._h);
+  showToast._h = setTimeout(()=> t.style.display='none', ms);
+}
+function statusClass(s){ return 'status-' + s.replace(/\s+/g,'-').replace(/[çã]/g,'a').replace('é','e'); }
+
+async function apiPost(action, payload){
+  const res = await fetch(API, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ action, ...payload })
+  });
+  if(!res.ok) throw new Error('Falha na requisição');
+  return res.json();
+}
+async function apiGet(params){
+  const qs = new URLSearchParams(params).toString();
+  const res = await fetch(`${API}?${qs}`);
+  if(!res.ok) throw new Error('Falha na requisição');
+  return res.json();
+}
+
+function goto(view){
+  ['form','confirm','track','adminlogin','admin'].forEach(v=>{
+    $('view-'+v).style.display = (v===view)?'block':'none';
+  });
+  document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.remove('active'));
+  const map = {form:'form', track:'track', adminlogin:'adminlogin', admin:'adminlogin'};
+  const btn = document.querySelector(`nav.tabs button[data-view="${map[view]||view}"]`);
+  if(btn) btn.classList.add('active');
+}
+
+document.querySelectorAll('nav.tabs button').forEach(b=>{
+  b.addEventListener('click', ()=> goto(b.dataset.view));
+});
+
+document.querySelectorAll('.choice').forEach(c=>{
+  c.addEventListener('click', ()=>{
+    document.querySelectorAll('.choice').forEach(x=>x.classList.remove('selected'));
+    c.classList.add('selected');
+    currentIdType = c.dataset.id;
+    $('idfields').style.display = (currentIdType==='ident') ? 'block' : 'none';
+  });
+});
+
+// ---------- submit ----------
+async function submitReport(){
+  const tipo = $('f-tipo').value, local = $('f-local').value, desc = $('f-desc').value.trim();
+  let nome='', email='', tel='';
+
+  if(!tipo || !local || !desc){
+    $('f-error').classList.add('show'); return;
+  }
+  if(currentIdType==='ident'){
+    nome = $('f-nome').value.trim(); email = $('f-email').value.trim(); tel = $('f-tel').value.trim();
+    if(!nome || !email || !tel){ $('f-error').classList.add('show'); return; }
+  }
+  $('f-error').classList.remove('show');
+
+  const identified = currentIdType==='ident';
+  const payload = {
+    identificado: identified,
+    nome: identified?nome:null, email: identified?email:null, telefone: identified?tel:null,
+    tipo, local, dataOcorrido: $('f-data').value || null,
+    descricao: desc
+  };
+
+  const submitBtn = document.querySelector('#view-form button.primary');
+  submitBtn.disabled = true; submitBtn.textContent = 'Enviando…';
+
+  let result;
+  try{
+    result = await apiPost('new_report', payload);
+  }catch(e){
+    showToast('Não foi possível enviar o relato. Verifique sua conexão e tente novamente.');
+    submitBtn.disabled = false; submitBtn.textContent = 'Enviar relato';
+    return;
+  }
+  submitBtn.disabled = false; submitBtn.textContent = 'Enviar relato';
+
+  if(!result || result.ok === false){
+    showToast('Erro ao registrar o relato. Tente novamente em instantes.');
+    return;
+  }
+
+  showToast('Equipe de Segurança da base GIG notificada por e-mail sobre o novo relato.');
+
+  $('confirm-title').textContent = identified ? 'Relato enviado com sucesso' : 'Relato anônimo enviado';
+  if(identified && result.protocolo){
+    $('confirm-text').textContent = 'Guarde seu protocolo para acompanhar o andamento. Você também será avisado por e-mail a cada atualização.';
+    $('confirm-protocol').innerHTML = `
+      <div class="protocol-box">
+        <div class="label">Seu protocolo</div>
+        <div class="num">${result.protocolo}</div>
+        <button class="copybtn" onclick="navigator.clipboard.writeText('${result.protocolo}'); showToast('Protocolo copiado.')">Copiar protocolo</button>
+      </div>`;
+  } else {
+    $('confirm-text').textContent = 'Como o relato é anônimo, não é possível emitir protocolo nem acompanhar o status. Obrigado por contribuir com a segurança da operação.';
+    $('confirm-protocol').innerHTML = '';
+  }
+
+  // reset form
+  ['f-nome','f-email','f-tel','f-data','f-desc'].forEach(id=>$(id).value='');
+  $('f-tipo').value=''; $('f-local').value='';
+
+  goto('confirm');
+}
+
+// ---------- track ----------
+async function trackReport(){
+  const protocolo = $('track-input').value.trim();
+  $('track-error').classList.remove('show');
+  $('track-result').innerHTML = '';
+  if(!protocolo) return;
+  try{
+    const r = await apiGet({ action: 'get_status', protocolo });
+    if(!r || r.ok === false) throw new Error('not found');
+    renderTrackResult(r);
+  }catch(e){
+    $('track-error').classList.add('show');
+  }
+}
+
+function renderTrackResult(r){
+  const tl = r.historico.map(h=>`
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-body">
+        <div class="tl-when">${new Date(h.em).toLocaleString('pt-BR')}</div>
+        <div class="tl-text"><span class="status-pill ${statusClass(h.status)}">${h.status}</span> ${h.nota?(' — '+h.nota):''}</div>
+      </div>
+    </div>`).join('');
+
+  $('track-result').innerHTML = `
+    <div class="card">
+      <h2>${r.protocolo}</h2>
+      <p class="hint">${r.tipo} · ${r.local}</p>
+      <span class="status-pill ${statusClass(r.status)}">${r.status}</span>
+      <div class="timeline">${tl}</div>
+    </div>`;
+}
+
+// ---------- admin ----------
+function adminLogin(){
+  if($('admin-pass').value === 'seguranca'){
+    $('admin-error').classList.remove('show');
+    loadAdminList();
+    goto('admin');
+  } else {
+    $('admin-error').classList.add('show');
+  }
+}
+
+async function loadAdminList(){
+  $('admin-list').innerHTML = 'Carregando…';
+  try{
+    const res = await apiGet({ action: 'list_reports' });
+    if(!res || res.ok === false || !res.reports){
+      $('admin-list').innerHTML = '<p class="hint">Nenhum relato registrado ainda.</p>';
+      adminReportsCache = [];
+      return;
+    }
+    const rows = res.reports.slice().sort((a,b)=> new Date(b.Timestamp) - new Date(a.Timestamp));
+    adminReportsCache = rows;
+
+    let html = '<table><thead><tr><th>Protocolo</th><th>Tipo</th><th>Local</th><th>Status</th><th></th></tr></thead><tbody>';
+    rows.forEach(r=>{
+      const isId = r.Identificado === 'Sim';
+      html += `<tr>
+        <td>${isId ? r.Protocolo : 'Anônimo'}</td>
+        <td>${r.Tipo}</td>
+        <td>${r.Local}</td>
+        <td><span class="status-pill ${statusClass(r.Status)}">${r.Status}</span></td>
+        <td><button class="rowbtn" onclick="openAdminReport('${r.Protocolo}')">Ver / atualizar</button></td>
+      </tr>`;
+    });
+    html += '</tbody></table>';
+    $('admin-list').innerHTML = html;
+  }catch(e){
+    $('admin-list').innerHTML = '<p class="hint">Erro ao carregar relatos. Verifique a implantação do backend.</p>';
+  }
+}
+
+function openAdminReport(protocolo){
+  const r = adminReportsCache.find(x => x.Protocolo === protocolo);
+  if(!r){ showToast('Relato não encontrado na lista carregada.'); return; }
+
+  const isId = r.Identificado === 'Sim';
+  const statuses = ['Recebido','Em análise','Em tratativa','Concluído'];
+  const options = statuses.map(s=>`<option ${s===r.Status?'selected':''}>${s}</option>`).join('');
+
+  $('admin-list').innerHTML = `
+    <div class="card" style="background:var(--asphalt-3)">
+      <h2>${isId ? r.Protocolo : 'Relato anônimo'}</h2>
+      <p class="hint">${r.Tipo} · ${r.Local} ${r.DataOcorrido? '· '+new Date(r.DataOcorrido).toLocaleString('pt-BR'):''}</p>
+      <p style="font-size:13.5px">${r.Descricao}</p>
+      ${isId ? `<p class="hint">Relator: ${r.Nome} · ${r.Email} · ${r.Telefone}</p>` : `<p class="hint">Relato anônimo — sem contato para notificação.</p>`}
+      <label>Novo status</label>
+      <select id="admin-status">${options}</select>
+      <label>Nota da atualização</label>
+      <textarea id="admin-nota" placeholder="Ex: Ação corretiva aplicada na esteira X, treinamento reforçado com a equipe."></textarea>
+      <button class="primary" onclick="saveAdminUpdate('${protocolo}')">Salvar atualização</button>
+      <button class="ghost" onclick="loadAdminList()">Voltar à lista</button>
+    </div>`;
+}
+
+async function saveAdminUpdate(protocolo){
+  const status = $('admin-status').value;
+  const nota = $('admin-nota').value.trim();
+  const btn = document.querySelector('#admin-list button.primary');
+  btn.disabled = true; btn.textContent = 'Salvando…';
+
+  try{
+    const res = await apiPost('update_status', { protocolo, status, nota });
+    if(!res || res.ok === false){ showToast('Erro ao salvar a atualização.'); }
+    else {
+      const r = adminReportsCache.find(x => x.Protocolo === protocolo);
+      const isId = r && r.Identificado === 'Sim';
+      showToast(isId
+        ? `E-mail de atualização enviado para ${r.Nome} sobre o relato ${protocolo}.`
+        : 'Status atualizado (relato anônimo, sem notificação de retorno).');
+    }
+  }catch(e){
+    showToast('Erro de conexão ao salvar a atualização.');
+  }
+  await loadAdminList();
+}
+</script>
+</body>
+</html>
