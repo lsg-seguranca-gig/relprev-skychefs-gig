@@ -5,150 +5,141 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>RELPREV · LSG Sky Chefs · Base GIG</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --asphalt: #12161b;
-    --asphalt-2: #1b2129;
-    --asphalt-3: #232b35;
-    --steel: #3a4552;
-    --steel-2: #5a6776;
+    --bg: #eef1f5;
+    --card: #ffffff;
+    --border: #e1e5eb;
+    --text: #1c222b;
+    --muted: #667085;
+    --primary: #a6182e;
+    --primary-dark: #7f1223;
+    --primary-tint: #fbe9ec;
     --yellow: #f5b700;
     --amber: #e2711d;
-    --green: #3fa34d;
-    --red: #d64545;
-    --off-white: #eceff3;
-    --muted: #9aa5b1;
-    --radius: 10px;
+    --green: #2f9e44;
+    --radius: 14px;
   }
   *{box-sizing:border-box;}
-  html,body{margin:0;padding:0;background:var(--asphalt);color:var(--off-white);font-family:'Inter',sans-serif;}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;}
   body{min-height:100vh;-webkit-font-smoothing:antialiased;}
-  h1,h2,h3,.brand{font-family:'Space Grotesk',sans-serif;}
+  h1,h2,h3,.brand{font-family:'Poppins',sans-serif;}
 
-  .hazard{
-    height:8px;width:100%;
-    background:repeating-linear-gradient(135deg, var(--yellow) 0 14px, var(--asphalt) 14px 28px);
-  }
+  .topbar{height:5px;width:100%;background:var(--primary);}
 
-  header.top{
-    background:var(--asphalt-2);
-    border-bottom:1px solid var(--steel);
-    padding:22px 24px 20px;
-  }
-  .wrap{max-width:640px;margin:0 auto;}
-  .brandrow{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;}
-  .brand{font-size:20px;font-weight:700;letter-spacing:0.2px;}
-  .brand span{color:var(--yellow);}
-  .baseline{color:var(--muted);font-size:13px;margin-top:4px;}
-  nav.tabs{display:flex;gap:6px;margin-top:18px;}
+  header.top{background:var(--card);border-bottom:1px solid var(--border);padding:22px 20px 18px;}
+  .wrap{max-width:600px;margin:0 auto;}
+  .brandrow{display:flex;flex-direction:column;align-items:center;text-align:center;gap:4px;}
+  .brand{font-size:19px;font-weight:700;color:var(--text);}
+  .brand span{color:var(--primary);}
+  .baseline{color:var(--muted);font-size:13px;}
+
+  nav.tabs{display:flex;gap:8px;margin:18px auto 0;max-width:600px;}
   nav.tabs button{
-    flex:1;background:transparent;border:1px solid var(--steel);color:var(--muted);
-    padding:9px 10px;border-radius:8px;font-family:'Inter';font-size:13px;font-weight:600;cursor:pointer;
+    flex:1;background:var(--card);border:1px solid var(--border);color:var(--muted);
+    padding:10px;border-radius:10px;font-family:'Inter';font-size:13.5px;font-weight:600;cursor:pointer;
   }
-  nav.tabs button.active{background:var(--yellow);color:#14181d;border-color:var(--yellow);}
+  nav.tabs button.active{background:var(--primary);color:#fff;border-color:var(--primary);}
 
-  main{padding:28px 20px 60px;}
+  main{padding:22px 16px 60px;}
 
   .card{
-    background:var(--asphalt-2);border:1px solid var(--steel);border-radius:var(--radius);
-    padding:22px 22px 24px;margin-bottom:16px;
+    background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+    padding:22px 20px 24px;margin-bottom:16px;box-shadow:0 1px 3px rgba(20,20,30,.04);
   }
-  .card h2{font-size:16px;margin:0 0 4px;font-weight:600;}
-  .card .hint{color:var(--muted);font-size:13px;margin:0 0 16px;line-height:1.5;}
+  .card h2{font-size:16.5px;margin:0 0 4px;font-weight:700;}
+  .card .hint{color:var(--muted);font-size:13px;margin:0 0 16px;line-height:1.55;}
 
-  fieldset{border:none;padding:0;margin:0 0 18px;}
-  legend{font-size:13px;font-weight:600;color:var(--off-white);margin-bottom:10px;padding:0;}
+  fieldset{border:none;padding:0;margin:0 0 20px;}
+  legend{font-size:13px;font-weight:700;color:var(--text);margin-bottom:10px;padding:0;}
 
   .choice-row{display:flex;gap:10px;}
   .choice{
-    flex:1;border:1px solid var(--steel);border-radius:8px;padding:14px 12px;cursor:pointer;
-    text-align:left;background:var(--asphalt-3);
+    flex:1;border:1.5px solid var(--border);border-radius:10px;padding:14px 12px;cursor:pointer;
+    text-align:left;background:#fafbfc;
   }
-  .choice.selected{border-color:var(--yellow);background:rgba(245,183,0,0.08);}
+  .choice.selected{border-color:var(--primary);background:var(--primary-tint);}
   .choice strong{display:block;font-size:14px;margin-bottom:2px;}
   .choice span{font-size:12px;color:var(--muted);}
 
-  label{display:block;font-size:13px;font-weight:600;margin:14px 0 6px;}
-  label.req::after{content:" *";color:var(--amber);}
-  input[type=text], input[type=email], input[type=tel], input[type=datetime-local], select, textarea{
-    width:100%;background:var(--asphalt);border:1px solid var(--steel);border-radius:8px;
-    color:var(--off-white);padding:11px 12px;font-family:'Inter';font-size:14px;
+  .type-grid{display:flex;flex-direction:column;gap:8px;}
+  .type-card{
+    border:1.5px solid var(--border);border-radius:10px;padding:12px 14px;cursor:pointer;background:#fafbfc;
   }
-  input:focus, select:focus, textarea:focus{outline:2px solid var(--yellow);outline-offset:1px;border-color:var(--yellow);}
+  .type-card.selected{border-color:var(--primary);background:var(--primary-tint);}
+  .type-card strong{display:block;font-size:14px;margin-bottom:3px;}
+  .type-card .ex{font-size:12.5px;color:var(--muted);line-height:1.5;}
+  .type-card .ex b{color:var(--text);font-weight:600;}
+
+  label{display:block;font-size:13px;font-weight:700;margin:14px 0 6px;}
+  label.req::after{content:" *";color:var(--primary);}
+  input[type=text], input[type=email], input[type=tel], input[type=datetime-local], select, textarea{
+    width:100%;background:#fff;border:1.5px solid var(--border);border-radius:9px;
+    color:var(--text);padding:11px 12px;font-family:'Inter';font-size:14px;
+  }
+  input:focus, select:focus, textarea:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-tint);}
   textarea{min-height:110px;resize:vertical;}
   .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
   @media (max-width:480px){.grid2{grid-template-columns:1fr;} .choice-row{flex-direction:column;}}
 
-  .idfields{border-left:2px solid var(--yellow);padding-left:14px;margin-top:14px;}
+  .idfields{border-left:3px solid var(--primary);padding-left:14px;margin-top:14px;}
 
   button.primary{
-    width:100%;background:var(--yellow);color:#14181d;border:none;border-radius:8px;
-    padding:14px;font-family:'Space Grotesk';font-weight:700;font-size:15px;cursor:pointer;margin-top:8px;
+    width:100%;background:var(--primary);color:#fff;border:none;border-radius:9px;
+    padding:14px;font-family:'Poppins';font-weight:600;font-size:15px;cursor:pointer;margin-top:8px;
   }
-  button.primary:hover{background:#ffc933;}
+  button.primary:hover{background:var(--primary-dark);}
+  button.primary:disabled{opacity:.6;cursor:default;}
   button.ghost{
-    width:100%;background:transparent;border:1px solid var(--steel);color:var(--off-white);
-    border-radius:8px;padding:12px;font-size:14px;cursor:pointer;margin-top:10px;
+    width:100%;background:transparent;border:1.5px solid var(--border);color:var(--text);
+    border-radius:9px;padding:12px;font-size:14px;cursor:pointer;margin-top:10px;
   }
-  .error{color:var(--red);font-size:13px;margin-top:6px;display:none;}
+  .error{color:var(--primary);font-size:13px;margin-top:6px;display:none;}
   .error.show{display:block;}
 
   .protocol-box{
-    border:1px dashed var(--yellow);border-radius:10px;padding:18px;text-align:center;margin:16px 0;
+    border:1.5px dashed var(--primary);border-radius:12px;padding:18px;text-align:center;margin:16px 0;background:var(--primary-tint);
   }
-  .protocol-box .num{font-family:'Space Grotesk';font-size:22px;font-weight:700;color:var(--yellow);letter-spacing:1px;}
-  .protocol-box .label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;}
-  .copybtn{background:var(--asphalt-3);border:1px solid var(--steel);color:var(--off-white);border-radius:6px;padding:6px 12px;font-size:12px;cursor:pointer;margin-top:10px;}
+  .protocol-box .num{font-family:'Poppins';font-size:21px;font-weight:700;color:var(--primary-dark);letter-spacing:.5px;}
+  .protocol-box .label{font-size:11.5px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;}
+  .copybtn{background:#fff;border:1.5px solid var(--border);color:var(--text);border-radius:7px;padding:6px 12px;font-size:12px;cursor:pointer;margin-top:10px;}
 
   .status-pill{display:inline-block;font-size:12px;font-weight:700;padding:4px 10px;border-radius:999px;}
-  .status-Recebido{background:rgba(90,103,118,.3);color:#c4ccd6;}
-  .status-Em-analise{background:rgba(245,183,0,.15);color:var(--yellow);}
-  .status-Em-tratativa{background:rgba(226,113,29,.15);color:var(--amber);}
-  .status-Concluido{background:rgba(63,163,77,.15);color:var(--green);}
+  .status-Recebido{background:#eef1f5;color:#4b5563;}
+  .status-Em-analise{background:#fff4d6;color:#916b00;}
+  .status-Em-tratativa{background:#fde3d1;color:var(--amber);}
+  .status-Concluido{background:#e3f6e8;color:var(--green);}
 
-  .timeline{margin-top:16px;border-top:1px solid var(--steel);padding-top:14px;}
+  .timeline{margin-top:16px;border-top:1px solid var(--border);padding-top:14px;}
   .tl-item{display:flex;gap:10px;margin-bottom:12px;}
-  .tl-dot{width:8px;height:8px;border-radius:50%;background:var(--yellow);margin-top:5px;flex-shrink:0;}
+  .tl-dot{width:8px;height:8px;border-radius:50%;background:var(--primary);margin-top:5px;flex-shrink:0;}
   .tl-body .tl-when{font-size:11px;color:var(--muted);}
   .tl-body .tl-text{font-size:13px;margin-top:2px;}
 
-  .banner{
-    background:rgba(226,113,29,0.12);border:1px solid var(--amber);color:#f4c99a;
-    border-radius:8px;padding:10px 14px;font-size:12.5px;margin-bottom:18px;line-height:1.5;
-  }
   .toast{
     position:fixed;bottom:20px;left:50%;transform:translateX(-50%);
-    background:var(--asphalt-3);border:1px solid var(--yellow);color:var(--off-white);
-    padding:12px 18px;border-radius:8px;font-size:13px;max-width:90%;text-align:center;
-    box-shadow:0 6px 24px rgba(0,0,0,.4);z-index:50;
+    background:var(--text);color:#fff;
+    padding:12px 18px;border-radius:9px;font-size:13px;max-width:90%;text-align:center;
+    box-shadow:0 6px 24px rgba(0,0,0,.2);z-index:50;
   }
-  table{width:100%;border-collapse:collapse;font-size:12.5px;}
-  th,td{text-align:left;padding:8px 6px;border-bottom:1px solid var(--steel);vertical-align:top;}
-  th{color:var(--muted);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.4px;}
-  .rowbtn{background:var(--asphalt-3);border:1px solid var(--steel);color:var(--off-white);border-radius:6px;padding:5px 10px;font-size:12px;cursor:pointer;}
-  .adminlogin{max-width:280px;margin:60px auto;text-align:center;}
   footer{color:var(--muted);font-size:11.5px;text-align:center;padding:20px;}
 </style>
 </head>
 <body>
 
-<div class="hazard"></div>
+<div class="topbar"></div>
 <header class="top">
-  <div class="wrap">
-    <div class="brandrow">
-      <div>
-        <div class="brand">LSG <span>Sky Chefs</span></div>
-        <div class="baseline">RELPREV · Relato de Prevenção de Acidentes — Base GIG · Transportes / Pista</div>
-      </div>
-    </div>
-    <nav class="tabs">
-      <button data-view="form" class="active">Novo relato</button>
-      <button data-view="track">Consultar relato</button>
-      <button data-view="adminlogin">Equipe de Segurança</button>
-    </nav>
+  <div class="wrap brandrow">
+    <div class="brand">LSG <span>Sky Chefs</span></div>
+    <div class="baseline">RELPREV · Relato de Prevenção de Acidentes — Base GIG · Transportes / Pista</div>
   </div>
 </header>
+
+<nav class="tabs wrap">
+  <button data-view="form" class="active">Novo relato</button>
+  <button data-view="track">Consultar relato</button>
+</nav>
 
 <main class="wrap">
 
@@ -188,24 +179,37 @@
       </div>
 
       <fieldset style="margin-top:20px">
-        <legend>O que aconteceu?</legend>
-        <label class="req">Tipo de relato</label>
-        <select id="f-tipo">
-          <option value="">Selecione…</option>
-          <option>Condição insegura</option>
-          <option>Ato inseguro</option>
-          <option>Quase acidente</option>
-          <option>Acidente / incidente</option>
-          <option>Sugestão de melhoria</option>
-        </select>
+        <legend>Tipo de relato *</legend>
+        <div class="type-grid" id="type-grid">
+          <div class="type-card" data-value="Condição insegura">
+            <strong>Condição insegura</strong>
+            <div class="ex"><b>Algo no ambiente ou equipamento</b> que pode causar acidente, mesmo sem ninguém ter errado. Ex.: piso molhado na doca, fiação exposta, iluminação apagada.</div>
+          </div>
+          <div class="type-card" data-value="Ato inseguro">
+            <strong>Ato inseguro</strong>
+            <div class="ex"><b>Uma atitude de alguém</b> que aumenta o risco de acidente. Ex.: subir no equipamento sem cinto, não usar EPI, pular etapa do procedimento.</div>
+          </div>
+          <div class="type-card" data-value="Quase acidente">
+            <strong>Quase acidente</strong>
+            <div class="ex"><b>Quase deu errado</b>, mas não houve consequência dessa vez. Ex.: carga quase caiu da esteira, mas foi segurada a tempo.</div>
+          </div>
+          <div class="type-card" data-value="Acidente / incidente">
+            <strong>Acidente / incidente</strong>
+            <div class="ex"><b>Já causou dano</b> a uma pessoa, equipamento ou carga. Ex.: colaborador se machucou ao manusear um carrinho pesado.</div>
+          </div>
+          <div class="type-card" data-value="Sugestão de melhoria">
+            <strong>Sugestão de melhoria</strong>
+            <div class="ex"><b>Uma ideia</b> para deixar a operação mais segura, mesmo sem problema ter acontecido. Ex.: instalar corrimão extra na escada da doca.</div>
+          </div>
+        </div>
 
-        <div class="grid2">
+        <div class="grid2" style="margin-top:16px">
           <div>
             <label class="req">Local</label>
             <select id="f-local">
               <option value="">Selecione…</option>
               <option>Pátio / posição de aeronave</option>
-              <option>Área de carregamento (dock)</option>
+              <option>Área de carregamento (docas dentro da base)</option>
               <option>Elevador de carga (High Loader)</option>
               <option>Trator/carreta de carga</option>
               <option>Galeria / esteira</option>
@@ -251,36 +255,15 @@
     <div id="track-result"></div>
   </section>
 
-  <!-- ================= ADMIN LOGIN ================= -->
-  <section id="view-adminlogin" style="display:none">
-    <div class="card adminlogin">
-      <h2>Acesso da equipe de Segurança</h2>
-      <p class="hint">Área restrita para gestão dos relatos e atualização de status.</p>
-      <input type="text" id="admin-pass" placeholder="Código de acesso">
-      <button class="primary" onclick="adminLogin()">Entrar</button>
-      <p class="error" id="admin-error">Código incorreto.</p>
-      <p class="hint" style="margin-top:14px">Demonstração: código <strong>seguranca</strong></p>
-    </div>
-  </section>
-
-  <!-- ================= ADMIN DASHBOARD ================= -->
-  <section id="view-admin" style="display:none">
-    <div class="banner">Painel de demonstração. Em produção, esta tela roda como um app privado (Google Apps Script / planilha) restrito à equipe de Segurança, com login corporativo.</div>
-    <div class="card">
-      <h2>Relatos recebidos</h2>
-      <div id="admin-list"></div>
-    </div>
-  </section>
-
 </main>
 
-<footer>LSG Sky Chefs · Base GIG · Segurança operacional em pista</footer>
+<footer>© Caterair Serviços de Bordo e Hotelaria LTDA (LSG Sky Chefs) · Base GIG · RELPREV</footer>
 <div id="toast" style="display:none" class="toast"></div>
 
 <script>
-const API = '/api/gas'; // proxy Vercel -> Google Apps Script (ver api/gas.js)
+const API = '/api/gas'; // proxy Vercel -> Google Apps Script
 let currentIdType = 'anon';
-let adminReportsCache = []; // guarda a última lista carregada pelo painel de Segurança
+let currentTipo = '';
 
 // ---------- helpers ----------
 function $(id){ return document.getElementById(id); }
@@ -289,8 +272,6 @@ function showToast(msg, ms=3200){
   clearTimeout(showToast._h);
   showToast._h = setTimeout(()=> t.style.display='none', ms);
 }
-function statusClass(s){ return 'status-' + s.replace(/\s+/g,'-').replace(/[çã]/g,'a').replace('é','e'); }
-
 async function apiPost(action, payload){
   const res = await fetch(API, {
     method: 'POST',
@@ -308,15 +289,13 @@ async function apiGet(params){
 }
 
 function goto(view){
-  ['form','confirm','track','adminlogin','admin'].forEach(v=>{
+  ['form','confirm','track'].forEach(v=>{
     $('view-'+v).style.display = (v===view)?'block':'none';
   });
   document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.remove('active'));
-  const map = {form:'form', track:'track', adminlogin:'adminlogin', admin:'adminlogin'};
-  const btn = document.querySelector(`nav.tabs button[data-view="${map[view]||view}"]`);
+  const btn = document.querySelector(`nav.tabs button[data-view="${view}"]`);
   if(btn) btn.classList.add('active');
 }
-
 document.querySelectorAll('nav.tabs button').forEach(b=>{
   b.addEventListener('click', ()=> goto(b.dataset.view));
 });
@@ -330,25 +309,33 @@ document.querySelectorAll('.choice').forEach(c=>{
   });
 });
 
+document.querySelectorAll('.type-card').forEach(c=>{
+  c.addEventListener('click', ()=>{
+    document.querySelectorAll('.type-card').forEach(x=>x.classList.remove('selected'));
+    c.classList.add('selected');
+    currentTipo = c.dataset.value;
+  });
+});
+
 // ---------- submit ----------
 async function submitReport(){
-  const tipo = $('f-tipo').value, local = $('f-local').value, desc = $('f-desc').value.trim();
+  const local = $('f-local').value, desc = $('f-desc').value.trim();
   let nome='', email='', tel='';
 
-  if(!tipo || !local || !desc){
+  if(!currentTipo || !local || !desc){
     $('f-error').classList.add('show'); return;
   }
-  if(currentIdType==='ident'){
+  const identified = currentIdType==='ident';
+  if(identified){
     nome = $('f-nome').value.trim(); email = $('f-email').value.trim(); tel = $('f-tel').value.trim();
     if(!nome || !email || !tel){ $('f-error').classList.add('show'); return; }
   }
   $('f-error').classList.remove('show');
 
-  const identified = currentIdType==='ident';
   const payload = {
     identificado: identified,
     nome: identified?nome:null, email: identified?email:null, telefone: identified?tel:null,
-    tipo, local, dataOcorrido: $('f-data').value || null,
+    tipo: currentTipo, local, dataOcorrido: $('f-data').value || null,
     descricao: desc
   };
 
@@ -388,12 +375,16 @@ async function submitReport(){
 
   // reset form
   ['f-nome','f-email','f-tel','f-data','f-desc'].forEach(id=>$(id).value='');
-  $('f-tipo').value=''; $('f-local').value='';
+  $('f-local').value='';
+  document.querySelectorAll('.type-card').forEach(x=>x.classList.remove('selected'));
+  currentTipo = '';
 
   goto('confirm');
 }
 
 // ---------- track ----------
+function statusClass(s){ return 'status-' + s.replace(/\s+/g,'-').replace(/[çã]/g,'a').replace('é','e'); }
+
 async function trackReport(){
   const protocolo = $('track-input').value.trim();
   $('track-error').classList.remove('show');
@@ -425,92 +416,6 @@ function renderTrackResult(r){
       <span class="status-pill ${statusClass(r.status)}">${r.status}</span>
       <div class="timeline">${tl}</div>
     </div>`;
-}
-
-// ---------- admin ----------
-function adminLogin(){
-  if($('admin-pass').value === 'seguranca'){
-    $('admin-error').classList.remove('show');
-    loadAdminList();
-    goto('admin');
-  } else {
-    $('admin-error').classList.add('show');
-  }
-}
-
-async function loadAdminList(){
-  $('admin-list').innerHTML = 'Carregando…';
-  try{
-    const res = await apiGet({ action: 'list_reports' });
-    if(!res || res.ok === false || !res.reports){
-      $('admin-list').innerHTML = '<p class="hint">Nenhum relato registrado ainda.</p>';
-      adminReportsCache = [];
-      return;
-    }
-    const rows = res.reports.slice().sort((a,b)=> new Date(b.Timestamp) - new Date(a.Timestamp));
-    adminReportsCache = rows;
-
-    let html = '<table><thead><tr><th>Protocolo</th><th>Tipo</th><th>Local</th><th>Status</th><th></th></tr></thead><tbody>';
-    rows.forEach(r=>{
-      const isId = r.Identificado === 'Sim';
-      html += `<tr>
-        <td>${isId ? r.Protocolo : 'Anônimo'}</td>
-        <td>${r.Tipo}</td>
-        <td>${r.Local}</td>
-        <td><span class="status-pill ${statusClass(r.Status)}">${r.Status}</span></td>
-        <td><button class="rowbtn" onclick="openAdminReport('${r.Protocolo}')">Ver / atualizar</button></td>
-      </tr>`;
-    });
-    html += '</tbody></table>';
-    $('admin-list').innerHTML = html;
-  }catch(e){
-    $('admin-list').innerHTML = '<p class="hint">Erro ao carregar relatos. Verifique a implantação do backend.</p>';
-  }
-}
-
-function openAdminReport(protocolo){
-  const r = adminReportsCache.find(x => x.Protocolo === protocolo);
-  if(!r){ showToast('Relato não encontrado na lista carregada.'); return; }
-
-  const isId = r.Identificado === 'Sim';
-  const statuses = ['Recebido','Em análise','Em tratativa','Concluído'];
-  const options = statuses.map(s=>`<option ${s===r.Status?'selected':''}>${s}</option>`).join('');
-
-  $('admin-list').innerHTML = `
-    <div class="card" style="background:var(--asphalt-3)">
-      <h2>${isId ? r.Protocolo : 'Relato anônimo'}</h2>
-      <p class="hint">${r.Tipo} · ${r.Local} ${r.DataOcorrido? '· '+new Date(r.DataOcorrido).toLocaleString('pt-BR'):''}</p>
-      <p style="font-size:13.5px">${r.Descricao}</p>
-      ${isId ? `<p class="hint">Relator: ${r.Nome} · ${r.Email} · ${r.Telefone}</p>` : `<p class="hint">Relato anônimo — sem contato para notificação.</p>`}
-      <label>Novo status</label>
-      <select id="admin-status">${options}</select>
-      <label>Nota da atualização</label>
-      <textarea id="admin-nota" placeholder="Ex: Ação corretiva aplicada na esteira X, treinamento reforçado com a equipe."></textarea>
-      <button class="primary" onclick="saveAdminUpdate('${protocolo}')">Salvar atualização</button>
-      <button class="ghost" onclick="loadAdminList()">Voltar à lista</button>
-    </div>`;
-}
-
-async function saveAdminUpdate(protocolo){
-  const status = $('admin-status').value;
-  const nota = $('admin-nota').value.trim();
-  const btn = document.querySelector('#admin-list button.primary');
-  btn.disabled = true; btn.textContent = 'Salvando…';
-
-  try{
-    const res = await apiPost('update_status', { protocolo, status, nota });
-    if(!res || res.ok === false){ showToast('Erro ao salvar a atualização.'); }
-    else {
-      const r = adminReportsCache.find(x => x.Protocolo === protocolo);
-      const isId = r && r.Identificado === 'Sim';
-      showToast(isId
-        ? `E-mail de atualização enviado para ${r.Nome} sobre o relato ${protocolo}.`
-        : 'Status atualizado (relato anônimo, sem notificação de retorno).');
-    }
-  }catch(e){
-    showToast('Erro de conexão ao salvar a atualização.');
-  }
-  await loadAdminList();
 }
 </script>
 </body>

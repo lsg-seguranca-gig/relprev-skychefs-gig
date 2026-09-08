@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RELPREV · Gestão · Segurança GIG</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #eef1f5; --card:#fff; --border:#e1e5eb; --text:#1c222b; --muted:#667085;
+    --primary:#a6182e; --primary-dark:#7f1223; --primary-tint:#fbe9ec;
+    --amber:#e2711d; --green:#2f9e44; --radius:14px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;}
+  h1,h2,.brand{font-family:'Poppins',sans-serif;}
+  .topbar{height:5px;width:100%;background:var(--primary);}
+  header.top{background:var(--card);border-bottom:1px solid var(--border);padding:20px;text-align:center;}
+  .brand{font-size:18px;font-weight:700;}
+  .brand span{color:var(--primary);}
+  .baseline{color:var(--muted);font-size:13px;margin-top:2px;}
+  .wrap{max-width:760px;margin:0 auto;padding:24px 16px 60px;}
+
+  .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:16px;box-shadow:0 1px 3px rgba(20,20,30,.04);}
+  .login-card{max-width:340px;margin:60px auto;text-align:center;}
+  label{display:block;font-size:13px;font-weight:700;margin:14px 0 6px;text-align:left;}
+  input[type=text],input[type=password],select,textarea{
+    width:100%;background:#fff;border:1.5px solid var(--border);border-radius:9px;padding:11px 12px;font-size:14px;color:var(--text);
+  }
+  input:focus,select:focus,textarea:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-tint);}
+  textarea{min-height:90px;resize:vertical;}
+  button.primary{width:100%;background:var(--primary);color:#fff;border:none;border-radius:9px;padding:13px;font-family:'Poppins';font-weight:600;font-size:15px;cursor:pointer;margin-top:12px;}
+  button.primary:hover{background:var(--primary-dark);}
+  button.primary:disabled{opacity:.6;cursor:default;}
+  button.ghost{width:100%;background:transparent;border:1.5px solid var(--border);color:var(--text);border-radius:9px;padding:11px;font-size:14px;cursor:pointer;margin-top:8px;}
+  .error{color:var(--primary);font-size:13px;margin-top:8px;display:none;}
+  .error.show{display:block;}
+
+  .topbar-actions{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;}
+  .who{font-size:13px;color:var(--muted);}
+  .logout{background:none;border:1px solid var(--border);border-radius:8px;padding:6px 12px;font-size:12.5px;cursor:pointer;color:var(--text);}
+
+  table{width:100%;border-collapse:collapse;font-size:13px;}
+  th,td{text-align:left;padding:9px 6px;border-bottom:1px solid var(--border);vertical-align:top;}
+  th{color:var(--muted);font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.4px;}
+  .rowbtn{background:#fafbfc;border:1px solid var(--border);color:var(--text);border-radius:7px;padding:6px 12px;font-size:12.5px;cursor:pointer;}
+
+  .status-pill{display:inline-block;font-size:12px;font-weight:700;padding:4px 10px;border-radius:999px;}
+  .status-Recebido{background:#eef1f5;color:#4b5563;}
+  .status-Em-analise{background:#fff4d6;color:#916b00;}
+  .status-Em-tratativa{background:#fde3d1;color:var(--amber);}
+  .status-Concluido{background:#e3f6e8;color:var(--green);}
+
+  footer{color:var(--muted);font-size:11.5px;text-align:center;padding:20px;}
+</style>
+</head>
+<body>
+
+<div class="topbar"></div>
+<header class="top">
+  <div class="brand">RELPREV · <span>Gestão</span></div>
+  <div class="baseline">Painel restrito da equipe de Segurança — Base GIG</div>
+</header>
+
+<div class="wrap">
+
+  <!-- ===== LOGIN ===== -->
+  <div id="view-login" class="card login-card">
+    <h2>Acesso restrito</h2>
+    <p style="color:var(--muted);font-size:13px">Use seu usuário e senha cadastrados pela Segurança.</p>
+    <label>Usuário</label>
+    <input type="text" id="login-user" autocomplete="username">
+    <label>Senha</label>
+    <input type="password" id="login-pass" autocomplete="current-password">
+    <button class="primary" onclick="doLogin()">Entrar</button>
+    <p class="error" id="login-error">Usuário ou senha inválidos.</p>
+  </div>
+
+  <!-- ===== DASHBOARD ===== -->
+  <div id="view-dashboard" style="display:none">
+    <div class="topbar-actions">
+      <span class="who" id="who-label"></span>
+      <button class="logout" onclick="doLogout()">Sair</button>
+    </div>
+    <div class="card">
+      <h2>Relatos recebidos</h2>
+      <div id="admin-list">Carregando…</div>
+    </div>
+  </div>
+
+</div>
+
+<footer>© Caterair Serviços de Bordo e Hotelaria LTDA (LSG Sky Chefs) · Base GIG · RELPREV — acesso restrito</footer>
+
+<script>
+const API = '/api/gas';
+let adminReportsCache = [];
+
+function $(id){ return document.getElementById(id); }
+function getToken(){ return sessionStorage.getItem('relprev_token'); }
+function getUser(){ return sessionStorage.getItem('relprev_user'); }
+
+async function apiPost(action, payload){
+  const res = await fetch(API, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ action, ...payload })
+  });
+  return res.json();
+}
+function statusClass(s){ return 'status-' + s.replace(/\s+/g,'-').replace(/[çã]/g,'a').replace('é','e'); }
+
+// ---------- login/logout ----------
+async function doLogin(){
+  const usuario = $('login-user').value.trim();
+  const senha = $('login-pass').value;
+  $('login-error').classList.remove('show');
+  if(!usuario || !senha) return;
+
+  const btn = document.querySelector('#view-login button.primary');
+  btn.disabled = true; btn.textContent = 'Entrando…';
+  let res;
+  try{ res = await apiPost('login', { usuario, senha }); }
+  catch(e){ res = null; }
+  btn.disabled = false; btn.textContent = 'Entrar';
+
+  if(!res || res.ok === false || !res.token){
+    $('login-error').classList.add('show');
+    return;
+  }
+  sessionStorage.setItem('relprev_token', res.token);
+  sessionStorage.setItem('relprev_user', usuario);
+  showDashboard();
+}
+
+function doLogout(){
+  sessionStorage.removeItem('relprev_token');
+  sessionStorage.removeItem('relprev_user');
+  $('view-dashboard').style.display = 'none';
+  $('view-login').style.display = 'block';
+  $('login-pass').value = '';
+}
+
+function showDashboard(){
+  $('view-login').style.display = 'none';
+  $('view-dashboard').style.display = 'block';
+  $('who-label').textContent = 'Conectado como ' + getUser();
+  loadAdminList();
+}
+
+// se já existe um token de sessão válido (aba não fechada), pula direto pro painel
+window.addEventListener('load', ()=>{
+  if(getToken()) showDashboard();
+});
+
+// ---------- dashboard ----------
+async function loadAdminList(){
+  $('admin-list').innerHTML = 'Carregando…';
+  const res = await apiPost('list_reports', { token: getToken() });
+
+  if(res && res.error === 'unauthorized'){
+    doLogout();
+    return;
+  }
+  if(!res || res.ok === false || !res.reports){
+    $('admin-list').innerHTML = '<p style="color:var(--muted);font-size:13px">Nenhum relato registrado ainda.</p>';
+    adminReportsCache = [];
+    return;
+  }
+
+  const rows = res.reports.slice().sort((a,b)=> new Date(b.Timestamp) - new Date(a.Timestamp));
+  adminReportsCache = rows;
+
+  let html = '<table><thead><tr><th>Protocolo</th><th>Tipo</th><th>Local</th><th>Status</th><th></th></tr></thead><tbody>';
+  rows.forEach(r=>{
+    const isId = r.Identificado === 'Sim';
+    html += `<tr>
+      <td>${isId ? r.Protocolo : 'Anônimo'}</td>
+      <td>${r.Tipo}</td>
+      <td>${r.Local}</td>
+      <td><span class="status-pill ${statusClass(r.Status)}">${r.Status}</span></td>
+      <td><button class="rowbtn" onclick="openAdminReport('${r.Protocolo}')">Ver / atualizar</button></td>
+    </tr>`;
+  });
+  html += '</tbody></table>';
+  $('admin-list').innerHTML = html;
+}
+
+function openAdminReport(protocolo){
+  const r = adminReportsCache.find(x => x.Protocolo === protocolo);
+  if(!r) return;
+
+  const isId = r.Identificado === 'Sim';
+  const statuses = ['Recebido','Em análise','Em tratativa','Concluído'];
+  const options = statuses.map(s=>`<option ${s===r.Status?'selected':''}>${s}</option>`).join('');
+
+  $('admin-list').innerHTML = `
+    <div style="background:#fafbfc;border:1px solid var(--border);border-radius:12px;padding:18px">
+      <h2 style="margin-top:0">${isId ? r.Protocolo : 'Relato anônimo'}</h2>
+      <p style="color:var(--muted);font-size:13px">${r.Tipo} · ${r.Local} ${r.DataOcorrido? '· '+new Date(r.DataOcorrido).toLocaleString('pt-BR'):''}</p>
+      <p style="font-size:13.5px">${r.Descricao}</p>
+      ${isId ? `<p style="color:var(--muted);font-size:13px">Relator: ${r.Nome} · ${r.Email} · ${r.Telefone}</p>` : `<p style="color:var(--muted);font-size:13px">Relato anônimo — sem contato para notificação.</p>`}
+      <label>Novo status</label>
+      <select id="admin-status">${options}</select>
+      <label>Nota da atualização</label>
+      <textarea id="admin-nota" placeholder="Ex: Ação corretiva aplicada na esteira X, treinamento reforçado com a equipe."></textarea>
+      <button class="primary" onclick="saveAdminUpdate('${protocolo}')">Salvar atualização</button>
+      <button class="ghost" onclick="loadAdminList()">Voltar à lista</button>
+    </div>`;
+}
+
+async function saveAdminUpdate(protocolo){
+  const status = $('admin-status').value;
+  const nota = $('admin-nota').value.trim();
+  const btn = document.querySelector('#admin-list button.primary');
+  btn.disabled = true; btn.textContent = 'Salvando…';
+
+  const res = await apiPost('update_status', { token: getToken(), protocolo, status, nota });
+
+  if(res && res.error === 'unauthorized'){ doLogout(); return; }
+
+  if(!res || res.ok === false){
+    alert('Erro ao salvar a atualização.');
+  }
+  await loadAdminList();
+}
+</script>
+</body>
+</html>
