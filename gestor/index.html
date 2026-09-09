@@ -4,183 +4,249 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>RELPREV · Gestão · Segurança GIG</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --bg: #eef1f5; --card:#fff; --border:#e1e5eb; --text:#1c222b; --muted:#667085;
-    --primary:#a6182e; --primary-dark:#7f1223; --primary-tint:#fbe9ec;
-    --amber:#e2711d; --green:#2f9e44; --radius:14px;
-  }
-  *{box-sizing:border-box;}
-  html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;}
-  h1,h2,.brand{font-family:'Poppins',sans-serif;}
-  .topbar{height:5px;width:100%;background:var(--primary);}
-  header.top{background:var(--card);border-bottom:1px solid var(--border);padding:20px;text-align:center;}
-  .brand{font-size:18px;font-weight:700;}
-  .brand span{color:var(--primary);}
-  .baseline{color:var(--muted);font-size:13px;margin-top:2px;}
-  .wrap{max-width:760px;margin:0 auto;padding:24px 16px 60px;}
-
-  .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:16px;box-shadow:0 1px 3px rgba(20,20,30,.04);}
-  .login-card{max-width:340px;margin:60px auto;text-align:center;}
-  label{display:block;font-size:13px;font-weight:700;margin:14px 0 6px;text-align:left;}
-  input[type=text],input[type=password],select,textarea{
-    width:100%;background:#fff;border:1.5px solid var(--border);border-radius:9px;padding:11px 12px;font-size:14px;color:var(--text);
-  }
-  input:focus,select:focus,textarea:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-tint);}
-  textarea{min-height:90px;resize:vertical;}
-  button.primary{width:100%;background:var(--primary);color:#fff;border:none;border-radius:9px;padding:13px;font-family:'Poppins';font-weight:600;font-size:15px;cursor:pointer;margin-top:12px;}
-  button.primary:hover{background:var(--primary-dark);}
-  button.primary:disabled{opacity:.6;cursor:default;}
-  button.ghost{width:100%;background:transparent;border:1.5px solid var(--border);color:var(--text);border-radius:9px;padding:11px;font-size:14px;cursor:pointer;margin-top:8px;}
-  .error{color:var(--primary);font-size:13px;margin-top:8px;display:none;}
-  .error.show{display:block;}
-
-  .topbar-actions{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;}
-  .who{font-size:13px;color:var(--muted);}
-  .logout{background:none;border:1px solid var(--border);border-radius:8px;padding:6px 12px;font-size:12.5px;cursor:pointer;color:var(--text);}
-
-  table{width:100%;border-collapse:collapse;font-size:13px;}
-  th,td{text-align:left;padding:9px 6px;border-bottom:1px solid var(--border);vertical-align:top;}
-  th{color:var(--muted);font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.4px;}
-  .rowbtn{background:#fafbfc;border:1px solid var(--border);color:var(--text);border-radius:7px;padding:6px 12px;font-size:12.5px;cursor:pointer;}
-
-  .status-pill{display:inline-block;font-size:12px;font-weight:700;padding:4px 10px;border-radius:999px;}
-  .status-Recebido{background:#eef1f5;color:#4b5563;}
-  .status-Em-analise{background:#fff4d6;color:#916b00;}
-  .status-Em-tratativa{background:#fde3d1;color:var(--amber);}
-  .status-Concluido{background:#e3f6e8;color:var(--green);}
-
-  footer{color:var(--muted);font-size:11.5px;text-align:center;padding:20px;}
-</style>
+<link rel="icon" href="assets/icone_lsg.ico">
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-<div class="topbar"></div>
-<header class="top">
-  <div class="brand">RELPREV · <span>Gestão</span></div>
-  <div class="baseline">Painel restrito da equipe de Segurança — Base GIG</div>
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <img src="assets/logo_lsg.png" class="logo" alt="LSG Sky Chefs">
+      <div>
+        <div class="title-row">
+          <span class="title">RELPREV</span>
+          <span class="badge">Painel da Segurança</span>
+        </div>
+        <div class="subtitle">Gestão de relatos e atualização de status — Base GIG</div>
+      </div>
+    </div>
+    <div class="topbar-buttons">
+      <button class="theme-toggle" id="theme-toggle" onclick="toggleTheme()" title="Alternar tema"></button>
+      <button class="btn btn-ghost" id="logout-btn" style="display:none" onclick="doLogout()">Sair</button>
+    </div>
+  </div>
 </header>
 
-<div class="wrap">
+<main class="page-wrap wide">
 
-  <!-- ===== LOGIN ===== -->
-  <div id="view-login" class="card login-card">
-    <h2>Acesso restrito</h2>
-    <p style="color:var(--muted);font-size:13px">Use seu usuário e senha cadastrados pela Segurança.</p>
-    <label>Usuário</label>
-    <input type="text" id="login-user" autocomplete="username">
-    <label>Senha</label>
-    <input type="password" id="login-pass" autocomplete="current-password">
-    <button class="primary" onclick="doLogin()">Entrar</button>
-    <p class="error" id="login-error">Usuário ou senha inválidos.</p>
-  </div>
-
-  <!-- ===== DASHBOARD ===== -->
-  <div id="view-dashboard" style="display:none">
-    <div class="topbar-actions">
-      <span class="who" id="who-label"></span>
-      <button class="logout" onclick="doLogout()">Sair</button>
-    </div>
+  <!-- ================= LOGIN ================= -->
+  <div id="view-login" class="login-wrap">
     <div class="card">
-      <h2>Relatos recebidos</h2>
-      <div id="admin-list">Carregando…</div>
+      <div class="card-head">
+        <div class="icon-box">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="10" rx="2"></rect><path d="M8 10V7a4 4 0 0 1 8 0v3"></path></svg>
+        </div>
+        <h2>Acesso restrito</h2>
+      </div>
+      <p class="card-hint">Use seu usuário e senha cadastrados pela equipe de Segurança.</p>
+
+      <div class="field">
+        <label class="field-label req">Usuário</label>
+        <input type="text" id="login-user" autocomplete="username">
+      </div>
+      <div class="field">
+        <label class="field-label req">Senha</label>
+        <input type="password" id="login-pass" autocomplete="current-password">
+      </div>
+      <p class="error-text" id="login-error">Usuário ou senha inválidos.</p>
+      <button class="btn btn-primary btn-block" onclick="doLogin()">Entrar</button>
     </div>
   </div>
 
-</div>
+  <!-- ================= DASHBOARD ================= -->
+  <div id="view-dashboard" style="display:none">
 
-<footer>© Caterair Serviços de Bordo e Hotelaria LTDA (LSG Sky Chefs) · Base GIG · RELPREV — acesso restrito</footer>
+    <div class="card">
+      <div class="card-head">
+        <div class="icon-box">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="7" x2="14" y2="7"></line><line x1="4" y1="12" x2="20" y2="12"></line><line x1="4" y1="17" x2="10" y2="17"></line><circle cx="17" cy="7" r="2"></circle><circle cx="16" cy="17" r="2"></circle></svg>
+        </div>
+        <h2>Filtros de relatos</h2>
+      </div>
+
+      <div class="grid3">
+        <div class="field">
+          <label class="field-label">Protocolo</label>
+          <input type="text" id="filter-protocolo" placeholder="RELPREV-GIG-...">
+        </div>
+        <div class="field">
+          <label class="field-label">Tipo de relato</label>
+          <select id="filter-tipo">
+            <option value="">Todos</option>
+            <option>Condição insegura</option>
+            <option>Ato inseguro</option>
+            <option>Quase acidente</option>
+            <option>Acidente / incidente</option>
+            <option>Sugestão de melhoria</option>
+          </select>
+        </div>
+        <div class="field">
+          <label class="field-label">Status</label>
+          <select id="filter-status">
+            <option value="">Todos</option>
+            <option>Recebido</option>
+            <option>Em análise</option>
+            <option>Em tratativa</option>
+            <option>Concluído</option>
+          </select>
+        </div>
+      </div>
+
+      <div style="display:flex; gap:10px; flex-wrap:wrap">
+        <button class="btn btn-primary" onclick="applyFilters()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"></circle><path d="m21 21-4.3-4.3"></path></svg>
+          Pesquisar
+        </button>
+        <button class="btn btn-ghost" onclick="clearFilters()">Limpar filtros</button>
+        <button class="btn btn-outline-green" onclick="exportCSV()">Exportar CSV</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <div class="icon-box">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="12" height="17" rx="2"></rect><path d="M9 4V3a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1"></path><path d="M9 11h6M9 15h6"></path></svg>
+        </div>
+        <h2>Relatos</h2>
+      </div>
+      <div id="admin-list"><p class="empty-state">Carregando…</p></div>
+    </div>
+
+  </div>
+</main>
+
+<div class="footer">
+  <div class="line1">© Caterair Serviços de Bordo e Hotelaria LTDA - Base GIG</div>
+  <div class="line2">RELPREV · Painel restrito da equipe de Segurança</div>
+</div>
 
 <script>
 const API = '/api/gas';
-let adminReportsCache = [];
+let allReports = [];
+let filteredReports = [];
 
 function $(id){ return document.getElementById(id); }
+
+/* ---------- theme ---------- */
+const sunIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>';
+const moonIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path></svg>';
+function applyTheme(t){
+  document.documentElement.setAttribute('data-theme', t);
+  $('theme-toggle').innerHTML = t === 'dark' ? sunIcon : moonIcon;
+  localStorage.setItem('relprev-theme', t);
+}
+function toggleTheme(){
+  const current = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+  applyTheme(current === 'dark' ? 'light' : 'dark');
+}
+applyTheme(localStorage.getItem('relprev-theme') || 'light');
+
+/* ---------- api ---------- */
 function getToken(){ return sessionStorage.getItem('relprev_token'); }
 function getUser(){ return sessionStorage.getItem('relprev_user'); }
-
 async function apiPost(action, payload){
-  const res = await fetch(API, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ action, ...payload })
-  });
+  const res = await fetch(API, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ action, ...payload }) });
   return res.json();
 }
 function statusClass(s){ return 'status-' + s.replace(/\s+/g,'-').replace(/[çã]/g,'a').replace('é','e'); }
 
-// ---------- login/logout ----------
+/* ---------- login/logout ---------- */
 async function doLogin(){
   const usuario = $('login-user').value.trim();
   const senha = $('login-pass').value;
   $('login-error').classList.remove('show');
   if(!usuario || !senha) return;
 
-  const btn = document.querySelector('#view-login button.primary');
+  const btn = document.querySelector('#view-login .btn-primary');
   btn.disabled = true; btn.textContent = 'Entrando…';
   let res;
-  try{ res = await apiPost('login', { usuario, senha }); }
-  catch(e){ res = null; }
+  try{ res = await apiPost('login', { usuario, senha }); } catch(e){ res = null; }
   btn.disabled = false; btn.textContent = 'Entrar';
 
-  if(!res || res.ok === false || !res.token){
-    $('login-error').classList.add('show');
-    return;
-  }
+  if(!res || res.ok === false || !res.token){ $('login-error').classList.add('show'); return; }
+
   sessionStorage.setItem('relprev_token', res.token);
   sessionStorage.setItem('relprev_user', usuario);
   showDashboard();
 }
-
 function doLogout(){
   sessionStorage.removeItem('relprev_token');
   sessionStorage.removeItem('relprev_user');
   $('view-dashboard').style.display = 'none';
+  $('logout-btn').style.display = 'none';
   $('view-login').style.display = 'block';
   $('login-pass').value = '';
 }
-
 function showDashboard(){
   $('view-login').style.display = 'none';
   $('view-dashboard').style.display = 'block';
-  $('who-label').textContent = 'Conectado como ' + getUser();
+  $('logout-btn').style.display = 'inline-flex';
   loadAdminList();
 }
+window.addEventListener('load', ()=>{ if(getToken()) showDashboard(); });
 
-// se já existe um token de sessão válido (aba não fechada), pula direto pro painel
-window.addEventListener('load', ()=>{
-  if(getToken()) showDashboard();
-});
+/* ---------- filtros ---------- */
+function applyFilters(){
+  const protocolo = $('filter-protocolo').value.trim().toLowerCase();
+  const tipo = $('filter-tipo').value;
+  const status = $('filter-status').value;
 
-// ---------- dashboard ----------
+  filteredReports = allReports.filter(r=>{
+    if(protocolo && !String(r.Protocolo).toLowerCase().includes(protocolo)) return false;
+    if(tipo && r.Tipo !== tipo) return false;
+    if(status && r.Status !== status) return false;
+    return true;
+  });
+  renderTable();
+}
+function clearFilters(){
+  $('filter-protocolo').value=''; $('filter-tipo').value=''; $('filter-status').value='';
+  filteredReports = allReports.slice();
+  renderTable();
+}
+function exportCSV(){
+  if(filteredReports.length===0){ alert('Nada para exportar.'); return; }
+  const cols = ['Protocolo','Identificado','Tipo','Local','Status','Timestamp'];
+  const lines = [cols.join(';')].concat(filteredReports.map(r => cols.map(c => `"${(r[c]??'').toString().replace(/"/g,'""')}"`).join(';')));
+  const blob = new Blob([lines.join('\n')], { type:'text/csv;charset=utf-8;' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'relatos_relprev_gig.csv';
+  a.click();
+}
+
+/* ---------- dashboard ---------- */
 async function loadAdminList(){
-  $('admin-list').innerHTML = 'Carregando…';
+  $('admin-list').innerHTML = '<p class="empty-state">Carregando…</p>';
   const res = await apiPost('list_reports', { token: getToken() });
 
-  if(res && res.error === 'unauthorized'){
-    doLogout();
-    return;
-  }
+  if(res && res.error === 'unauthorized'){ doLogout(); return; }
   if(!res || res.ok === false || !res.reports){
-    $('admin-list').innerHTML = '<p style="color:var(--muted);font-size:13px">Nenhum relato registrado ainda.</p>';
-    adminReportsCache = [];
+    $('admin-list').innerHTML = '<p class="empty-state">Nenhum relato registrado ainda.</p>';
+    allReports = []; filteredReports = [];
     return;
   }
 
-  const rows = res.reports.slice().sort((a,b)=> new Date(b.Timestamp) - new Date(a.Timestamp));
-  adminReportsCache = rows;
+  allReports = res.reports.slice().sort((a,b)=> new Date(b.Timestamp) - new Date(a.Timestamp));
+  filteredReports = allReports.slice();
+  renderTable();
+}
 
-  let html = '<table><thead><tr><th>Protocolo</th><th>Tipo</th><th>Local</th><th>Status</th><th></th></tr></thead><tbody>';
-  rows.forEach(r=>{
+function renderTable(){
+  if(filteredReports.length===0){
+    $('admin-list').innerHTML = '<p class="empty-state">Nenhum relato encontrado para esse filtro.</p>';
+    return;
+  }
+  let html = '<table class="data-table"><thead><tr><th>Protocolo</th><th>Tipo</th><th>Local</th><th>Status</th><th></th></tr></thead><tbody>';
+  filteredReports.forEach(r=>{
     const isId = r.Identificado === 'Sim';
     html += `<tr>
       <td>${isId ? r.Protocolo : 'Anônimo'}</td>
       <td>${r.Tipo}</td>
       <td>${r.Local}</td>
       <td><span class="status-pill ${statusClass(r.Status)}">${r.Status}</span></td>
-      <td><button class="rowbtn" onclick="openAdminReport('${r.Protocolo}')">Ver / atualizar</button></td>
+      <td><button class="btn btn-ghost" onclick="openAdminReport('${r.Protocolo}')">Ver / atualizar</button></td>
     </tr>`;
   });
   html += '</tbody></table>';
@@ -188,7 +254,7 @@ async function loadAdminList(){
 }
 
 function openAdminReport(protocolo){
-  const r = adminReportsCache.find(x => x.Protocolo === protocolo);
+  const r = allReports.find(x => x.Protocolo === protocolo);
   if(!r) return;
 
   const isId = r.Identificado === 'Sim';
@@ -196,33 +262,34 @@ function openAdminReport(protocolo){
   const options = statuses.map(s=>`<option ${s===r.Status?'selected':''}>${s}</option>`).join('');
 
   $('admin-list').innerHTML = `
-    <div style="background:#fafbfc;border:1px solid var(--border);border-radius:12px;padding:18px">
-      <h2 style="margin-top:0">${isId ? r.Protocolo : 'Relato anônimo'}</h2>
-      <p style="color:var(--muted);font-size:13px">${r.Tipo} · ${r.Local} ${r.DataOcorrido? '· '+new Date(r.DataOcorrido).toLocaleString('pt-BR'):''}</p>
+    <div>
+      <h2 style="margin-bottom:6px">${isId ? r.Protocolo : 'Relato anônimo'}</h2>
+      <p class="card-hint" style="margin-top:0">${r.Tipo} · ${r.Local} ${r.DataOcorrido? '· '+new Date(r.DataOcorrido).toLocaleString('pt-BR'):''}</p>
       <p style="font-size:13.5px">${r.Descricao}</p>
-      ${isId ? `<p style="color:var(--muted);font-size:13px">Relator: ${r.Nome} · ${r.Email} · ${r.Telefone}</p>` : `<p style="color:var(--muted);font-size:13px">Relato anônimo — sem contato para notificação.</p>`}
-      <label>Novo status</label>
-      <select id="admin-status">${options}</select>
-      <label>Nota da atualização</label>
-      <textarea id="admin-nota" placeholder="Ex: Ação corretiva aplicada na esteira X, treinamento reforçado com a equipe."></textarea>
-      <button class="primary" onclick="saveAdminUpdate('${protocolo}')">Salvar atualização</button>
-      <button class="ghost" onclick="loadAdminList()">Voltar à lista</button>
+      ${isId ? `<p class="card-hint">Relator: ${r.Nome} · ${r.Email} · ${r.Telefone}</p>` : `<p class="card-hint">Relato anônimo — sem contato para notificação.</p>`}
+      <div class="field">
+        <label class="field-label">Novo status</label>
+        <select id="admin-status">${options}</select>
+      </div>
+      <div class="field">
+        <label class="field-label">Nota da atualização</label>
+        <textarea id="admin-nota" placeholder="Ex: Ação corretiva aplicada na esteira X, treinamento reforçado com a equipe."></textarea>
+      </div>
+      <button class="btn btn-primary btn-block" onclick="saveAdminUpdate('${protocolo}')">Salvar atualização</button>
+      <button class="btn btn-ghost btn-block" style="margin-top:8px" onclick="renderTable()">Voltar à lista</button>
     </div>`;
 }
 
 async function saveAdminUpdate(protocolo){
   const status = $('admin-status').value;
   const nota = $('admin-nota').value.trim();
-  const btn = document.querySelector('#admin-list button.primary');
+  const btn = document.querySelector('#admin-list .btn-primary');
   btn.disabled = true; btn.textContent = 'Salvando…';
 
   const res = await apiPost('update_status', { token: getToken(), protocolo, status, nota });
-
   if(res && res.error === 'unauthorized'){ doLogout(); return; }
+  if(!res || res.ok === false){ alert('Erro ao salvar a atualização.'); }
 
-  if(!res || res.ok === false){
-    alert('Erro ao salvar a atualização.');
-  }
   await loadAdminList();
 }
 </script>
