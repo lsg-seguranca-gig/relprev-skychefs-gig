@@ -4,231 +4,135 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>RELPREV · LSG Sky Chefs · Base GIG</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --bg: #eef1f5;
-    --card: #ffffff;
-    --border: #e1e5eb;
-    --text: #1c222b;
-    --muted: #667085;
-    --primary: #a6182e;
-    --primary-dark: #7f1223;
-    --primary-tint: #fbe9ec;
-    --yellow: #f5b700;
-    --amber: #e2711d;
-    --green: #2f9e44;
-    --radius: 14px;
-  }
-  *{box-sizing:border-box;}
-  html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;}
-  body{min-height:100vh;-webkit-font-smoothing:antialiased;}
-  h1,h2,h3,.brand{font-family:'Poppins',sans-serif;}
-
-  .topbar{height:5px;width:100%;background:var(--primary);}
-
-  header.top{background:var(--card);border-bottom:1px solid var(--border);padding:22px 20px 18px;}
-  .wrap{max-width:600px;margin:0 auto;}
-  .brandrow{display:flex;flex-direction:column;align-items:center;text-align:center;gap:4px;}
-  .brand{font-size:19px;font-weight:700;color:var(--text);}
-  .brand span{color:var(--primary);}
-  .baseline{color:var(--muted);font-size:13px;}
-
-  nav.tabs{display:flex;gap:8px;margin:18px auto 0;max-width:600px;}
-  nav.tabs button{
-    flex:1;background:var(--card);border:1px solid var(--border);color:var(--muted);
-    padding:10px;border-radius:10px;font-family:'Inter';font-size:13.5px;font-weight:600;cursor:pointer;
-  }
-  nav.tabs button.active{background:var(--primary);color:#fff;border-color:var(--primary);}
-
-  main{padding:22px 16px 60px;}
-
-  .card{
-    background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
-    padding:22px 20px 24px;margin-bottom:16px;box-shadow:0 1px 3px rgba(20,20,30,.04);
-  }
-  .card h2{font-size:16.5px;margin:0 0 4px;font-weight:700;}
-  .card .hint{color:var(--muted);font-size:13px;margin:0 0 16px;line-height:1.55;}
-
-  fieldset{border:none;padding:0;margin:0 0 20px;}
-  legend{font-size:13px;font-weight:700;color:var(--text);margin-bottom:10px;padding:0;}
-
-  .choice-row{display:flex;gap:10px;}
-  .choice{
-    flex:1;border:1.5px solid var(--border);border-radius:10px;padding:14px 12px;cursor:pointer;
-    text-align:left;background:#fafbfc;
-  }
-  .choice.selected{border-color:var(--primary);background:var(--primary-tint);}
-  .choice strong{display:block;font-size:14px;margin-bottom:2px;}
-  .choice span{font-size:12px;color:var(--muted);}
-
-  .type-grid{display:flex;flex-direction:column;gap:8px;}
-  .type-card{
-    border:1.5px solid var(--border);border-radius:10px;padding:12px 14px;cursor:pointer;background:#fafbfc;
-  }
-  .type-card.selected{border-color:var(--primary);background:var(--primary-tint);}
-  .type-card strong{display:block;font-size:14px;margin-bottom:3px;}
-  .type-card .ex{font-size:12.5px;color:var(--muted);line-height:1.5;}
-  .type-card .ex b{color:var(--text);font-weight:600;}
-
-  label{display:block;font-size:13px;font-weight:700;margin:14px 0 6px;}
-  label.req::after{content:" *";color:var(--primary);}
-  input[type=text], input[type=email], input[type=tel], input[type=datetime-local], select, textarea{
-    width:100%;background:#fff;border:1.5px solid var(--border);border-radius:9px;
-    color:var(--text);padding:11px 12px;font-family:'Inter';font-size:14px;
-  }
-  input:focus, select:focus, textarea:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-tint);}
-  textarea{min-height:110px;resize:vertical;}
-  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
-  @media (max-width:480px){.grid2{grid-template-columns:1fr;} .choice-row{flex-direction:column;}}
-
-  .idfields{border-left:3px solid var(--primary);padding-left:14px;margin-top:14px;}
-
-  button.primary{
-    width:100%;background:var(--primary);color:#fff;border:none;border-radius:9px;
-    padding:14px;font-family:'Poppins';font-weight:600;font-size:15px;cursor:pointer;margin-top:8px;
-  }
-  button.primary:hover{background:var(--primary-dark);}
-  button.primary:disabled{opacity:.6;cursor:default;}
-  button.ghost{
-    width:100%;background:transparent;border:1.5px solid var(--border);color:var(--text);
-    border-radius:9px;padding:12px;font-size:14px;cursor:pointer;margin-top:10px;
-  }
-  .error{color:var(--primary);font-size:13px;margin-top:6px;display:none;}
-  .error.show{display:block;}
-
-  .protocol-box{
-    border:1.5px dashed var(--primary);border-radius:12px;padding:18px;text-align:center;margin:16px 0;background:var(--primary-tint);
-  }
-  .protocol-box .num{font-family:'Poppins';font-size:21px;font-weight:700;color:var(--primary-dark);letter-spacing:.5px;}
-  .protocol-box .label{font-size:11.5px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;}
-  .copybtn{background:#fff;border:1.5px solid var(--border);color:var(--text);border-radius:7px;padding:6px 12px;font-size:12px;cursor:pointer;margin-top:10px;}
-
-  .status-pill{display:inline-block;font-size:12px;font-weight:700;padding:4px 10px;border-radius:999px;}
-  .status-Recebido{background:#eef1f5;color:#4b5563;}
-  .status-Em-analise{background:#fff4d6;color:#916b00;}
-  .status-Em-tratativa{background:#fde3d1;color:var(--amber);}
-  .status-Concluido{background:#e3f6e8;color:var(--green);}
-
-  .timeline{margin-top:16px;border-top:1px solid var(--border);padding-top:14px;}
-  .tl-item{display:flex;gap:10px;margin-bottom:12px;}
-  .tl-dot{width:8px;height:8px;border-radius:50%;background:var(--primary);margin-top:5px;flex-shrink:0;}
-  .tl-body .tl-when{font-size:11px;color:var(--muted);}
-  .tl-body .tl-text{font-size:13px;margin-top:2px;}
-
-  .toast{
-    position:fixed;bottom:20px;left:50%;transform:translateX(-50%);
-    background:var(--text);color:#fff;
-    padding:12px 18px;border-radius:9px;font-size:13px;max-width:90%;text-align:center;
-    box-shadow:0 6px 24px rgba(0,0,0,.2);z-index:50;
-  }
-  footer{color:var(--muted);font-size:11.5px;text-align:center;padding:20px;}
-</style>
+<link rel="icon" href="assets/icone_lsg.ico">
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-<div class="topbar"></div>
-<header class="top">
-  <div class="wrap brandrow">
-    <div class="brand">LSG <span>Sky Chefs</span></div>
-    <div class="baseline">RELPREV · Relato de Prevenção de Acidentes — Base GIG · Transportes / Pista</div>
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <img src="assets/logo_lsg.png" class="logo" alt="LSG Sky Chefs">
+      <div>
+        <div class="title-row">
+          <span class="title">RELPREV</span>
+          <span class="badge">Colaborador</span>
+        </div>
+        <div class="subtitle">Relato de Prevenção de Acidentes — Base GIG</div>
+      </div>
+    </div>
+    <button class="theme-toggle" id="theme-toggle" onclick="toggleTheme()" title="Alternar tema"></button>
   </div>
 </header>
 
-<nav class="tabs wrap">
-  <button data-view="form" class="active">Novo relato</button>
-  <button data-view="track">Consultar relato</button>
-</nav>
+<main class="page-wrap">
 
-<main class="wrap">
+  <nav class="tabs">
+    <button class="btn btn-ghost active" data-view="form">Novo relato</button>
+    <button class="btn btn-ghost" data-view="track">Consultar relato</button>
+  </nav>
 
   <!-- ================= FORM VIEW ================= -->
   <section id="view-form">
-    <div class="card">
-      <h2>Relatar uma condição, ato inseguro ou quase acidente</h2>
-      <p class="hint">Use este canal para relatar tudo que possa colocar em risco você, seus colegas ou a operação no pátio — cargas, equipamentos, procedimentos, aeronaves ou instalações. Leva menos de 3 minutos.</p>
 
-      <fieldset>
-        <legend>Como você quer relatar?</legend>
-        <div class="choice-row">
-          <div class="choice selected" data-id="anon">
-            <strong>Anônimo</strong>
-            <span>Nenhum dado seu é solicitado ou salvo.</span>
-          </div>
-          <div class="choice" data-id="ident">
-            <strong>Identificado</strong>
-            <span>Você recebe um protocolo e acompanha o andamento.</span>
-          </div>
+    <div class="card">
+      <div class="card-head">
+        <div class="icon-box">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.2"></circle><path d="M5 20c0-3.6 3.1-6.5 7-6.5s7 2.9 7 6.5"></path></svg>
         </div>
-      </fieldset>
+        <h2>Identificação</h2>
+      </div>
+      <p class="card-hint">Escolha como você quer relatar. Se preferir, o relato pode ser 100% anônimo.</p>
+
+      <div class="choice-row">
+        <div class="choice selected" data-id="anon">
+          <strong>Anônimo</strong>
+          <span>Nenhum dado seu é solicitado ou salvo.</span>
+        </div>
+        <div class="choice" data-id="ident">
+          <strong>Identificado</strong>
+          <span>Você recebe um protocolo e acompanha o andamento.</span>
+        </div>
+      </div>
 
       <div id="idfields" class="idfields" style="display:none">
-        <label class="req">Nome completo</label>
-        <input type="text" id="f-nome" placeholder="Seu nome">
+        <div class="field">
+          <label class="field-label req">Nome completo</label>
+          <input type="text" id="f-nome" placeholder="Seu nome">
+        </div>
         <div class="grid2">
-          <div>
-            <label class="req">E-mail</label>
+          <div class="field">
+            <label class="field-label req">E-mail</label>
             <input type="email" id="f-email" placeholder="seuemail@exemplo.com">
           </div>
-          <div>
-            <label class="req">Telefone (WhatsApp)</label>
+          <div class="field">
+            <label class="field-label req">Telefone (WhatsApp)</label>
             <input type="tel" id="f-tel" placeholder="(21) 90000-0000">
           </div>
         </div>
       </div>
+    </div>
 
-      <fieldset style="margin-top:20px">
-        <legend>Tipo de relato *</legend>
-        <div class="type-grid" id="type-grid">
-          <div class="type-card" data-value="Condição insegura">
-            <strong>Condição insegura</strong>
-            <div class="ex"><b>Algo no ambiente ou equipamento</b> que pode causar acidente, mesmo sem ninguém ter errado. Ex.: piso molhado na doca, fiação exposta, iluminação apagada.</div>
-          </div>
-          <div class="type-card" data-value="Ato inseguro">
-            <strong>Ato inseguro</strong>
-            <div class="ex"><b>Uma atitude de alguém</b> que aumenta o risco de acidente. Ex.: subir no equipamento sem cinto, não usar EPI, pular etapa do procedimento.</div>
-          </div>
-          <div class="type-card" data-value="Quase acidente">
-            <strong>Quase acidente</strong>
-            <div class="ex"><b>Quase deu errado</b>, mas não houve consequência dessa vez. Ex.: carga quase caiu da esteira, mas foi segurada a tempo.</div>
-          </div>
-          <div class="type-card" data-value="Acidente / incidente">
-            <strong>Acidente / incidente</strong>
-            <div class="ex"><b>Já causou dano</b> a uma pessoa, equipamento ou carga. Ex.: colaborador se machucou ao manusear um carrinho pesado.</div>
-          </div>
-          <div class="type-card" data-value="Sugestão de melhoria">
-            <strong>Sugestão de melhoria</strong>
-            <div class="ex"><b>Uma ideia</b> para deixar a operação mais segura, mesmo sem problema ter acontecido. Ex.: instalar corrimão extra na escada da doca.</div>
-          </div>
+    <div class="card">
+      <div class="card-head">
+        <div class="icon-box">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="12" height="17" rx="2"></rect><path d="M9 4V3a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1"></path><path d="M9 11h6M9 15h6"></path></svg>
         </div>
+        <h2>O que aconteceu?</h2>
+      </div>
+      <p class="card-hint">Use este canal para relatar tudo que possa colocar em risco você, seus colegas ou a operação no pátio — cargas, equipamentos, procedimentos, aeronaves ou instalações.</p>
 
-        <div class="grid2" style="margin-top:16px">
-          <div>
-            <label class="req">Local</label>
-            <select id="f-local">
-              <option value="">Selecione…</option>
-              <option>Pátio / posição de aeronave</option>
-              <option>Área de carregamento (docas dentro da base)</option>
-              <option>Elevador de carga (High Loader)</option>
-              <option>Trator/carreta de carga</option>
-              <option>Galeria / esteira</option>
-              <option>Estacionamento de veículos de rampa</option>
-              <option>Outro</option>
-            </select>
-          </div>
-          <div>
-            <label>Data/hora do ocorrido</label>
-            <input type="datetime-local" id="f-data">
-          </div>
+      <label class="field-label req">Tipo de relato</label>
+      <div class="type-grid" id="type-grid">
+        <div class="type-card" data-value="Condição insegura">
+          <strong>Condição insegura</strong>
+          <div class="ex"><b>Algo no ambiente ou equipamento</b> que pode causar acidente, mesmo sem ninguém ter errado. Ex.: piso molhado na doca, fiação exposta, iluminação apagada.</div>
         </div>
+        <div class="type-card" data-value="Ato inseguro">
+          <strong>Ato inseguro</strong>
+          <div class="ex"><b>Uma atitude de alguém</b> que aumenta o risco de acidente. Ex.: subir no equipamento sem cinto, não usar EPI, pular etapa do procedimento.</div>
+        </div>
+        <div class="type-card" data-value="Quase acidente">
+          <strong>Quase acidente</strong>
+          <div class="ex"><b>Quase deu errado</b>, mas não houve consequência dessa vez. Ex.: carga quase caiu da esteira, mas foi segurada a tempo.</div>
+        </div>
+        <div class="type-card" data-value="Acidente / incidente">
+          <strong>Acidente / incidente</strong>
+          <div class="ex"><b>Já causou dano</b> a uma pessoa, equipamento ou carga. Ex.: colaborador se machucou ao manusear um carrinho pesado.</div>
+        </div>
+        <div class="type-card" data-value="Sugestão de melhoria">
+          <strong>Sugestão de melhoria</strong>
+          <div class="ex"><b>Uma ideia</b> para deixar a operação mais segura, mesmo sem problema ter acontecido. Ex.: instalar corrimão extra na escada da doca.</div>
+        </div>
+      </div>
 
-        <label class="req">Descrição detalhada</label>
+      <div class="grid2" style="margin-top:16px">
+        <div class="field">
+          <label class="field-label req">Local</label>
+          <select id="f-local">
+            <option value="">Selecione…</option>
+            <option>Pátio / posição de aeronave</option>
+            <option>Área de carregamento (docas dentro da base)</option>
+            <option>Elevador de carga (High Loader)</option>
+            <option>Trator/carreta de carga</option>
+            <option>Galeria / esteira</option>
+            <option>Estacionamento de veículos de rampa</option>
+            <option>Outro</option>
+          </select>
+        </div>
+        <div class="field">
+          <label class="field-label">Data/hora do ocorrido</label>
+          <input type="datetime-local" id="f-data">
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="field-label req">Descrição detalhada</label>
         <textarea id="f-desc" placeholder="Descreva o que você viu ou vivenciou: o que aconteceu, onde, com qual equipamento/carga, e o que poderia ter sido evitado."></textarea>
-        <p class="error" id="f-error">Preencha os campos obrigatórios antes de enviar.</p>
-      </fieldset>
+      </div>
+      <p class="error-text" id="f-error">Preencha os campos obrigatórios antes de enviar.</p>
 
-      <button class="primary" onclick="submitReport()">Enviar relato</button>
+      <button class="btn btn-primary btn-block" onclick="submitReport()">Enviar relato</button>
     </div>
   </section>
 
@@ -236,48 +140,78 @@
   <section id="view-confirm" style="display:none">
     <div class="card" style="text-align:center">
       <h2 id="confirm-title">Relato enviado</h2>
-      <p class="hint" id="confirm-text"></p>
+      <p class="card-hint" id="confirm-text" style="margin-top:8px"></p>
       <div id="confirm-protocol"></div>
-      <button class="ghost" onclick="goto('form')">Enviar outro relato</button>
+      <button class="btn btn-ghost btn-block" onclick="goto('form')">Enviar outro relato</button>
     </div>
   </section>
 
   <!-- ================= TRACK VIEW ================= -->
   <section id="view-track" style="display:none">
     <div class="card">
-      <h2>Consultar o andamento do seu relato</h2>
-      <p class="hint">Disponível apenas para relatos identificados. Informe o protocolo recebido no envio.</p>
-      <label class="req">Protocolo</label>
-      <input type="text" id="track-input" placeholder="Ex: RELPREV-GIG-20260908-4821">
-      <button class="primary" onclick="trackReport()">Consultar</button>
-      <p class="error" id="track-error">Protocolo não encontrado. Verifique e tente novamente.</p>
+      <div class="card-head">
+        <div class="icon-box">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"></circle><path d="m21 21-4.3-4.3"></path></svg>
+        </div>
+        <h2>Consultar o andamento</h2>
+      </div>
+      <p class="card-hint">Disponível apenas para relatos identificados. Informe o protocolo recebido no envio.</p>
+
+      <div class="inline-search">
+        <div class="field">
+          <label class="field-label req">Protocolo</label>
+          <input type="text" id="track-input" placeholder="Ex: RELPREV-GIG-20260908-4821">
+        </div>
+        <button class="btn btn-primary" onclick="trackReport()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"></circle><path d="m21 21-4.3-4.3"></path></svg>
+          Buscar
+        </button>
+      </div>
+      <p class="error-text" id="track-error">Protocolo não encontrado. Verifique e tente novamente.</p>
     </div>
     <div id="track-result"></div>
   </section>
 
 </main>
 
-<footer>© Caterair Serviços de Bordo e Hotelaria LTDA (LSG Sky Chefs) · Base GIG · RELPREV</footer>
+<div class="footer">
+  <div class="line1">© Caterair Serviços de Bordo e Hotelaria LTDA - Base GIG</div>
+  <div class="line2">RELPREV · Relato de Prevenção de Acidentes</div>
+</div>
+
 <div id="toast" style="display:none" class="toast"></div>
 
 <script>
-const API = '/api/gas'; // proxy Vercel -> Google Apps Script
+const API = '/api/gas';
 let currentIdType = 'anon';
 let currentTipo = '';
 
-// ---------- helpers ----------
 function $(id){ return document.getElementById(id); }
+
+/* ---------- theme ---------- */
+const sunIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>';
+const moonIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path></svg>';
+function applyTheme(t){
+  document.documentElement.setAttribute('data-theme', t);
+  $('theme-toggle').innerHTML = t === 'dark' ? sunIcon : moonIcon;
+  localStorage.setItem('relprev-theme', t);
+}
+function toggleTheme(){
+  const current = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+  applyTheme(current === 'dark' ? 'light' : 'dark');
+}
+applyTheme(localStorage.getItem('relprev-theme') || 'light');
+
+/* ---------- toast ---------- */
 function showToast(msg, ms=3200){
   const t = $('toast'); t.textContent = msg; t.style.display='block';
   clearTimeout(showToast._h);
   showToast._h = setTimeout(()=> t.style.display='none', ms);
 }
+
+/* ---------- api ---------- */
 async function apiPost(action, payload){
-  const res = await fetch(API, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ action, ...payload })
-  });
+  const res = await fetch(API, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ action, ...payload }) });
   if(!res.ok) throw new Error('Falha na requisição');
   return res.json();
 }
@@ -288,10 +222,9 @@ async function apiGet(params){
   return res.json();
 }
 
+/* ---------- navigation ---------- */
 function goto(view){
-  ['form','confirm','track'].forEach(v=>{
-    $('view-'+v).style.display = (v===view)?'block':'none';
-  });
+  ['form','confirm','track'].forEach(v=>{ $('view-'+v).style.display = (v===view) ? 'block' : 'none'; });
   document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.remove('active'));
   const btn = document.querySelector(`nav.tabs button[data-view="${view}"]`);
   if(btn) btn.classList.add('active');
@@ -308,7 +241,6 @@ document.querySelectorAll('.choice').forEach(c=>{
     $('idfields').style.display = (currentIdType==='ident') ? 'block' : 'none';
   });
 });
-
 document.querySelectorAll('.type-card').forEach(c=>{
   c.addEventListener('click', ()=>{
     document.querySelectorAll('.type-card').forEach(x=>x.classList.remove('selected'));
@@ -317,14 +249,12 @@ document.querySelectorAll('.type-card').forEach(c=>{
   });
 });
 
-// ---------- submit ----------
+/* ---------- submit ---------- */
 async function submitReport(){
   const local = $('f-local').value, desc = $('f-desc').value.trim();
   let nome='', email='', tel='';
 
-  if(!currentTipo || !local || !desc){
-    $('f-error').classList.add('show'); return;
-  }
+  if(!currentTipo || !local || !desc){ $('f-error').classList.add('show'); return; }
   const identified = currentIdType==='ident';
   if(identified){
     nome = $('f-nome').value.trim(); email = $('f-email').value.trim(); tel = $('f-tel').value.trim();
@@ -339,23 +269,19 @@ async function submitReport(){
     descricao: desc
   };
 
-  const submitBtn = document.querySelector('#view-form button.primary');
+  const submitBtn = document.querySelector('#view-form button.btn-primary');
   submitBtn.disabled = true; submitBtn.textContent = 'Enviando…';
 
   let result;
-  try{
-    result = await apiPost('new_report', payload);
-  }catch(e){
+  try{ result = await apiPost('new_report', payload); }
+  catch(e){
     showToast('Não foi possível enviar o relato. Verifique sua conexão e tente novamente.');
     submitBtn.disabled = false; submitBtn.textContent = 'Enviar relato';
     return;
   }
   submitBtn.disabled = false; submitBtn.textContent = 'Enviar relato';
 
-  if(!result || result.ok === false){
-    showToast('Erro ao registrar o relato. Tente novamente em instantes.');
-    return;
-  }
+  if(!result || result.ok === false){ showToast('Erro ao registrar o relato. Tente novamente em instantes.'); return; }
 
   showToast('Equipe de Segurança da base GIG notificada por e-mail sobre o novo relato.');
 
@@ -373,7 +299,6 @@ async function submitReport(){
     $('confirm-protocol').innerHTML = '';
   }
 
-  // reset form
   ['f-nome','f-email','f-tel','f-data','f-desc'].forEach(id=>$(id).value='');
   $('f-local').value='';
   document.querySelectorAll('.type-card').forEach(x=>x.classList.remove('selected'));
@@ -382,7 +307,7 @@ async function submitReport(){
   goto('confirm');
 }
 
-// ---------- track ----------
+/* ---------- track ---------- */
 function statusClass(s){ return 'status-' + s.replace(/\s+/g,'-').replace(/[çã]/g,'a').replace('é','e'); }
 
 async function trackReport(){
@@ -391,19 +316,17 @@ async function trackReport(){
   $('track-result').innerHTML = '';
   if(!protocolo) return;
   try{
-    const r = await apiGet({ action: 'get_status', protocolo });
+    const r = await apiGet({ action:'get_status', protocolo });
     if(!r || r.ok === false) throw new Error('not found');
     renderTrackResult(r);
-  }catch(e){
-    $('track-error').classList.add('show');
-  }
+  }catch(e){ $('track-error').classList.add('show'); }
 }
 
 function renderTrackResult(r){
   const tl = r.historico.map(h=>`
     <div class="tl-item">
       <div class="tl-dot"></div>
-      <div class="tl-body">
+      <div>
         <div class="tl-when">${new Date(h.em).toLocaleString('pt-BR')}</div>
         <div class="tl-text"><span class="status-pill ${statusClass(h.status)}">${h.status}</span> ${h.nota?(' — '+h.nota):''}</div>
       </div>
@@ -412,7 +335,7 @@ function renderTrackResult(r){
   $('track-result').innerHTML = `
     <div class="card">
       <h2>${r.protocolo}</h2>
-      <p class="hint">${r.tipo} · ${r.local}</p>
+      <p class="card-hint" style="margin-top:6px">${r.tipo} · ${r.local}</p>
       <span class="status-pill ${statusClass(r.status)}">${r.status}</span>
       <div class="timeline">${tl}</div>
     </div>`;
